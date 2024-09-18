@@ -1,0 +1,48 @@
+doctype html  
+html(lang="en")  
+    head  
+        meta(charset="UTF-8")  
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")  
+        title Museo   
+        link(rel="stylesheet", href="styles.css")  
+    body   
+        .background-images  
+            img#backgroundImage(src="pictures/imagen1.jpg", alt="Imagen de fondo")  
+        
+        form(id="searchForm", action="/search", method="GET")  
+            label(for="department") Departamento:  
+            select(id="department", name="department")  
+                option(value="") Selecciona un departamento  
+                // Aquí puedes agregar más opciones dinámicamente  
+                
+            br  
+            label(for="hasImages")  
+                input(type="checkbox", id="hasImages", name="hasImages")  
+                | Con imágenes  
+            br  
+            label(for="geoLocation") Localización:  
+            input(type="text", id="geoLocation", name="location", placeholder="Ej. France")   
+            br  
+            label(for="keyword") Palabra clave:  
+            input(type="text", id="keyword", name="keyword", placeholder="Buscar...")   
+            br  
+            button(type="submit") Buscar  
+        
+        // Modal para imágenes adicionales  
+        .modal#imageModal(style="display:none")  
+            .modal-content  
+                span.close-button &times;  
+                div#modalImageContainer // Contenedor para la imagen principal y las imágenes adicionales  
+
+        div#results.grid  
+            // Los resultados se poblarán aquí  
+
+        script(src="function.js")  
+        script.  
+            let currentImageIndex = 1;  
+            const totalImages = 10; // Total de imágenes  
+            const changeBackgroundImage = () => {  
+                currentImageIndex = (currentImageIndex % totalImages) + 1; // Incrementa el índice y reinicia después de la última imagen  
+                document.getElementById('backgroundImage').src = `pictures/imagen${currentImageIndex}.jpg`; // Cambia la imagen de fondo  
+            };  
+            setInterval(changeBackgroundImage, 5000); // Cambia la imagen cada 5 segundos

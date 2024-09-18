@@ -1,0 +1,48 @@
+doctype html  
+html(lang="en")  
+  head  
+    meta(charset="UTF-8")  
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")  
+    title Resultados del Museo  
+    link(rel="stylesheet", href="styles.css")  
+  body  
+    form(id="searchForm")  
+      label(for="department") Departamento:  
+      select(id="department" name="department")  
+        option(value="") Selecciona un departamento  
+        // Las opciones de departamento se llenarán aquí mediante JavaScript  
+      label(for="geoLocation") Localización:  
+      input(type="text" id="geoLocation" name="location" placeholder="Ej. France")  
+      label(for="keyword") Palabra clave:  
+      input(type="text" id="keyword" name="keyword" placeholder="Buscar...")  
+      button(type="submit") Buscar  
+
+    div#results.grid  
+      each object in objects  
+        .card  
+          img(src=object.primaryImage && object.primaryImage.trim() !== "" ? object.primaryImage : '/image/sinImagen.jpg' alt=object.title || 'Imagen no disponible')  
+          .date Fecha: #{object.objectDate || 'Desconocida'}  
+          h2= object.title || 'Sin título'  
+          p Cultura: #{object.culture || 'Desconocida'}  
+          p Dinastía: #{object.dynasty || 'Desconocida'}  
+          p Descripción: #{object.description || 'Descripción no disponible'}   
+          a(href=`/object/${object.objectID}`) Ver imágenes adicionales  
+
+    nav.pagination  
+      if page > 1  
+        a(href=`/search?department=${department}&keyword=${keyword}&location=${location}&page=${page - 1}`) Anterior  
+      each pageNum in Array.from({ length: totalPages }, (_, i) => i + 1)  
+        if pageNum === page  
+          span= pageNum  
+        else  
+          a(href=`/search?department=${department}&keyword=${keyword}&location=${location}&page=${pageNum}`)= pageNum  
+      if page < totalPages  
+        a(href=`/search?department=${department}&keyword=${keyword}&location=${location}&page=${page + 1}`) Siguiente  
+
+    // Modal para imágenes adicionales  
+    .modal#imageModal(style="display:none")  
+      .modal-content  
+        span.close-button &times;  
+        div#modalImageContainer // Contenedor para la imagen principal y las imágenes adicionales  
+
+    script(src="function.js")

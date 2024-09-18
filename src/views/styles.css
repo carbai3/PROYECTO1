@@ -1,0 +1,149 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Hace que el contenido se distribuya verticalmente */
+    align-items: center; /* Centra horizontalmente el contenido */
+    background-color: #f4f4f4; /* Color de fondo opcional para mejorar la visibilidad */
+    position: relative; /* Permite que los elementos se posicionen en relación al contenedor */
+}
+.background-images {  
+    position: fixed; /* Fija la imagen de fondo */  
+    top: 0; /* Posición en la parte superior */  
+    left: 0; /* Posición en la parte izquierda */  
+    width: 100%; /* Ancho completo */  
+    height: 100%; /* Altura completa */  
+    overflow: hidden; /* Oculta cualquier desbordamiento */  
+    z-index: -1; /* Envía la imagen detrás del contenido */  
+}  
+
+.background-images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra todo el contenedor */
+    transition: opacity 1s ease-in-out; /* Transición suave al cambiar de imagen */
+}
+#searchForm {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan si es necesario */
+    justify-content: center; /* Centra horizontalmente el contenido dentro del formulario */
+    gap: 10px; /* Espaciado entre los elementos */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.5); /* Color de fondo opcional para el formulario */
+    border-bottom: 1px solid rgba(251,251 ,251, 0.5); /* Línea de separación opcional entre el formulario y el contenido */
+    width: 100%;
+    max-width: 1200px; /* Ancho máximo del formulario */
+}
+
+#searchForm label {
+    margin: 5px;
+}
+
+#searchForm input[type="text"],
+#searchForm select {
+    padding: 8px;
+    width: auto;
+    max-width: 200px; /* Ancho máximo opcional para los campos de entrada */
+}
+
+#searchForm button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#searchForm button:hover {
+    background-color: #0056b3; /* Color de fondo del botón al pasar el mouse */
+}
+
+#results.grid {
+    margin-top: 20px; /* Espaciado superior para los resultados */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Cuatro columnas de igual ancho */
+    gap: 20px; /* Espaciado entre las tarjetas */
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px; /* Ancho máximo opcional para los resultados */
+}
+
+p{
+    color:blueviolet;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    border: 1px solid #ddd; /* Borde de la tarjeta */
+    border-radius: 8px; /* Bordes redondeados opcionales */
+    overflow: hidden; /* Oculta cualquier contenido que sobresalga de la tarjeta */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional para las tarjetas */
+    background-color: #fff; /* Color de fondo de la tarjeta */
+    text-align: center; /* Centra el texto dentro de la tarjeta */
+}
+
+.card img {
+    width: 100%; /* Asegura que la imagen ocupe el 100% del ancho de la tarjeta */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+.card h2 {
+    font-size: 1.2em;
+}
+
+.card p {
+    margin: 5px 0;
+}
+
+.card .date {
+    font-size: 14px; /* Tamaño de fuente para la fecha */
+    color: #666; /* Color de texto opcional para la fecha */
+}
+.card:hover {
+    transform: scale(1.05); /* Aumenta el tamaño de la tarjeta al pasar el mouse */
+    transition: transform 0.2s; /* Transición suave */
+}
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+}
+#modalImageContainer img {
+    width: 100%; /* Ajusta el tamaño de las imágenes */
+    height: auto; /* Mantiene la proporción de las imágenes */
+    margin-bottom: 10px; /* Espaciado entre imágenes */
+}
