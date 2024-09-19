@@ -18,26 +18,34 @@ document.addEventListener("DOMContentLoaded", async function() {
         return url;
     }
 
-    // Función para mostrar el modal con imágenes adicionales
-    async function showModal(objectID) {
-        try {
-            const response = await fetch(`/object/${objectID}`);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            
-            const data = await response.json();
-            if (data.additionalImages && data.additionalImages.length > 0) {
-                const modal = document.getElementById("imageModal");
-                const modalImg = document.getElementById("modalImage");
-                modalImg.src = data.additionalImages[0];
-                modal.style.display = "block";
-            } else {
-                alert('No hay imágenes adicionales disponibles.');
-            }
-        } catch (error) {
-            console.error('Error fetching additional images:', error);
-            alert('Hubo un error al cargar las imágenes adicionales.');
+    function openModal(images) {
+        const modal = document.getElementById("imageModal");
+        const imagesContainer = document.getElementById("modalImagesContainer");
+        // Limpiar el contenido anterior del modal
+        imagesContainer.innerHTML = '';
+        // Agregar cada imagen adicional al modal
+        images.forEach(imageUrl => {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = 'Imagen adicional';
+            img.style.width = '100%';
+            img.style.marginBottom = '10px';
+            imagesContainer.appendChild(img);});
+        // Mostrar el modal
+        modal.style.display = "block";
         }
-    }
+        function closeModal() {
+            const modal = document.getElementById("imageModal");
+            modal.style.display = "none";
+        }  
+
+    // Cerrar el modal al hacer clic fuera de él  
+    window.onclick = function(event) {
+        const modal = document.getElementById("imageModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+        }
 
     // Cargar departamentos desde la API
     try {  
@@ -53,6 +61,16 @@ document.addEventListener("DOMContentLoaded", async function() {
     } catch (error) {  
         console.error("Error al cargar departamentos:", error);  
     }  
+
+        // Manejo de click en "Ver imágenes adicionales"
+        document.addEventListener("click", function(event) {  
+            if (event.target.tagName === 'A' && event.target.textContent.trim() === "Ver imágenes adicionales") {  
+                event.preventDefault();  
+                const objectID = event.target.getAttribute("href").split('/').pop();  
+                showModal(objectID);  
+            }  
+        }); 
+
 
     // Manejador de evento para búsqueda
     searchForm.addEventListener("submit", async function(event) {  
@@ -76,26 +94,8 @@ document.addEventListener("DOMContentLoaded", async function() {
         }  
     });  
 
-    // Manejo de click en "Ver imágenes adicionales"
-    document.addEventListener("click", function(event) {  
-        if (event.target.tagName === 'A' && event.target.textContent.trim() === "Ver imágenes adicionales") {  
-            event.preventDefault();  
-            const objectID = event.target.getAttribute("href").split('/').pop();  
-            showModal(objectID);  
-        }  
-    });  
+ 
 
-    // Cerrar el modal al hacer clic en el botón de cerrar  
-    closeButton.addEventListener("click", function() {  
-        modal.style.display = "none";  
-    });  
-
-    // Cerrar el modal al hacer clic fuera de él  
-    window.addEventListener("click", function(event) {  
-        if (event.target === modal) {  
-            modal.style.display = "none";  
-        }  
-    });
 
     // Función para mostrar resultados de búsqueda
     function displayResults(data) {  

@@ -82,7 +82,6 @@ app.get('/search', async (req, res) => {
         const offset = (page - 1) * limit;  
 
         let url = buildSearchUrl({ departmentId, keyword, hasImages: true, geoLocation: location });  
-
         const response = await axios.get(url);  
 
         // Chequear si hay resultados  
@@ -95,42 +94,42 @@ app.get('/search', async (req, res) => {
             });  
         }  
 
-        // Obtener solo los IDs necesarios para esta página  
         const totalObjects = response.data.objectIDs.length; // Total de objetos disponibles  
-        const validObjectIDs = response.data.objectIDs.slice(offset, offset + limit); // Limita a lo que necesitas para la página actual   
+        const totalPages = Math.ceil(totalObjects / limit); // Calcular total de páginas  
+        const validObjectIDs = response.data.objectIDs.slice(offset, offset + limit); // Limitar a los que necesitas para la página actual   
 
         // Crea promises para obtener los detalles de los objetos  
         const fetchPromises = validObjectIDs.map(async (id) => {  
             try {  
                 const objResponse = await axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`);  
-                return objResponse.data;  // regresar el objeto en lugar de un undefined  
+                return objResponse.data;  // regresar el objeto  
             } catch (err) {  
                 console.error(`Error al recuperar el objeto con ID ${id}:`, err.message);  
                 return null;  
             }  
         });  
 
-        // Espera a que todas las promesas se resuelvan  
+        // Esperar a que todas las promesas se resuelvan  
         const objects = await Promise.all(fetchPromises);  
-
-        // Filtra objetos válidos (que no sean null)  
-        const validObjects = objects.filter(obj => obj !== null && obj.primaryImage);  
-
-        const totalPages = Math.ceil(totalObjects / limit); // Páginas totales  
-
-        // Renderiza la vista con los objetos  
-        res.render('results', {  
-            objects: validObjects, // Puedes pasar el array filtrado directamente  
+        
+        return res.render('results', {  
+            objects: objects.filter(obj => obj !== null), // Filtrar nulos  
             page,  
             totalPages,  
             departmentId,  
             keyword,  
-            location  
+            location,  
+            message: totalObjects === 0 ? 'No se encontraron resultados para los filtros aplicados.' : null  
         });  
 
     } catch (error) {  
-        console.error("Error en la consulta a la API:", error.message, error.stack);  
-        res.status(500).send(`Error al recuperar los objetos de arte: ${error.message}`);  
+        console.error('Error en la búsqueda:', error);  
+        res.status(500).render('results', {  
+            objects: [],  
+            page: 1,  
+            totalPages: 0,  
+            message: 'Ocurrió un error al intentar buscar los resultados.'  
+        });  
     }  
 });
 // Ruta para obtener un objeto específico

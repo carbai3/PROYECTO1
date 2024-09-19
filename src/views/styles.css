@@ -110,10 +110,12 @@ p{
     transform: scale(1.05); /* Aumenta el tamaño de la tarjeta al pasar el mouse */
     transition: transform 0.2s; /* Transición suave */
 }
+/* Etilo del modal: Estilos para que el modal ocupe toda la pantalla y tenga un fondo oscuro
+semitransparente*/
 .modal {
     display: none; /* Oculto por defecto */
-    position: fixed;
-    z-index: 1;
+    position: fixed;/* fijo en pantalla completa*/
+    z-index: 1; /* por encima de los elementos*/
     left: 0;
     top: 0;
     width: 100%;
@@ -121,14 +123,28 @@ p{
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
 }
-
+/*Define el área blanca donde se mostrarán las imágenes */
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 15% auto;/*centrar el contenido*/
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    border-radius: 10px solid #888;
+    width: 80%;/* Ancho del modla*/
+    max-width: 700 px;/*Maximo ancho*/
 }
+
+#closeModal {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    }
+
+#closeModal:hover {
+    color: red;
+    }
+
+
 .close-button {
     color: #aaa;
     float: right;
@@ -136,14 +152,15 @@ p{
     font-weight: bold;
     cursor: pointer;
 }
-
-.close-button:hover,
-.close-button:focus {
-    color: black;
-    text-decoration: none;
-}
 #modalImageContainer img {
     width: 100%; /* Ajusta el tamaño de las imágenes */
     height: auto; /* Mantiene la proporción de las imágenes */
     margin-bottom: 10px; /* Espaciado entre imágenes */
 }
+
+/*.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+}
+*/

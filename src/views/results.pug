@@ -17,16 +17,16 @@ html(lang="en")
       input(type="text" id="keyword" name="keyword" placeholder="Buscar...")  
       button(type="submit") Buscar  
 
-    div#results.grid  
-      each object in objects  
-        .card  
-          img(src=object.primaryImage && object.primaryImage.trim() !== "" ? object.primaryImage : '/image/sinImagen.jpg' alt=object.title || 'Imagen no disponible')  
-          .date Fecha: #{object.objectDate || 'Desconocida'}  
-          h2= object.title || 'Sin título'  
-          p Cultura: #{object.culture || 'Desconocida'}  
-          p Dinastía: #{object.dynasty || 'Desconocida'}  
-          p Descripción: #{object.description || 'Descripción no disponible'}   
-          a(href=`/object/${object.objectID}`) Ver imágenes adicionales  
+  div.grid-container
+    each object in objects
+    .card
+      img(src=object.primaryImage || '/image/sinImagen.jpg', alt=object.title || 'Sin título')
+      h3 #{object.title || 'Sin título'}
+      p Cultura: #{object.culture || 'Desconocida'}
+      p Dinastía: #{object.dynasty || 'Desconocida'}
+      if object.additionalImages.length > 0
+        button(onclick=`openModal(${JSON.stringify(object.additionalImages)})`) Ver
+        imágenes adicionales 
 
     nav.pagination  
       if page > 1  
@@ -39,10 +39,10 @@ html(lang="en")
       if page < totalPages  
         a(href=`/search?department=${department}&keyword=${keyword}&location=${location}&page=${page + 1}`) Siguiente  
 
-    // Modal para imágenes adicionales  
-    .modal#imageModal(style="display:none")  
-      .modal-content  
-        span.close-button &times;  
-        div#modalImageContainer // Contenedor para la imagen principal y las imágenes adicionales  
+    //  Modal structure (hidden by default)
+    div#imageModal.modal
+    div.modal-content  
+      span#closeModal(onclick="closeModal()") &times; 
+      div#modalImageContainer // contenedor imagenes modal 
 
     script(src="function.js")
