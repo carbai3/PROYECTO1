@@ -21,7 +21,11 @@ document.addEventListener("DOMContentLoaded", async function() {
     function showModal(images) {
         const modal = document.getElementById("imageModal");
         const imagesContainer = document.getElementById("modalImagesContainer");
-        // Limpiar el contenido anterior del modal
+        if (!imagesContainer) {  
+            console.error("No se encontró el contenedor de imágenes.");  
+            return; // Sale de la función si no se encuentra  
+        } 
+        // Limpiar el contenido anterior del modal    
         imagesContainer.innerHTML = '';
         // Agregar cada imagen adicional al modal
         images.forEach(imageUrl => {
@@ -95,7 +99,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         }  
     });  
 
- 
+
 
 
     // Función para mostrar resultados de búsqueda
@@ -108,7 +112,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         }  
 
         const objectPromises = data.objectIDs.map(async (id) => {  
-            const objectResponse = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`);  
+        const objectResponse = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`);  
             return objectResponse.json();  
         });
 

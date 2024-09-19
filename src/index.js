@@ -132,6 +132,7 @@ app.get('/search', async (req, res) => {
         });  
     }  
 });
+
 // Ruta para obtener un objeto específico
 app.get('/object/:id', async (req, res) => {
     const objectId = req.params.id;
