@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         return url;
     }
 
-    function openModal(images) {
+    function showModal(images) {
         const modal = document.getElementById("imageModal");
         const imagesContainer = document.getElementById("modalImagesContainer");
         // Limpiar el contenido anterior del modal
@@ -34,7 +34,8 @@ document.addEventListener("DOMContentLoaded", async function() {
         // Mostrar el modal
         modal.style.display = "block";
         }
-        function closeModal() {
+        
+    function closeModal() {
             const modal = document.getElementById("imageModal");
             modal.style.display = "none";
         }  

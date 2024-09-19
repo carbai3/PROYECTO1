@@ -9,31 +9,29 @@ html(lang="en")
         .background-images  
             img#backgroundImage(src="pictures/imagen1.jpg", alt="Imagen de fondo")  
         
-        form(id="searchForm", action="/search", method="GET")  
+        form(id="searchForm")  
             label(for="department") Departamento:  
-            select(id="department", name="department")  
+            select(id="department")  
                 option(value="") Selecciona un departamento  
-                // Aquí puedes agregar más opciones dinámicamente  
-
+                
             br  
             label(for="hasImages")  
-                input(type="checkbox", id="hasImages", name="hasImages")  
+                input(type="checkbox" id="hasImages")  
                 | Con imágenes  
             br  
             label(for="geoLocation") Localización:  
-            input(type="text", id="geoLocation", name="location", placeholder="Ej. France")   
+            input(type="text" id="geoLocation" placeholder="Ej. France")   
             br  
             label(for="keyword") Palabra clave:  
-            input(type="text", id="keyword", name="keyword", placeholder="Buscar...")   
+            input(type="text" id="keyword" placeholder="Buscar...")   
             br  
             button(type="submit") Buscar  
-
+        
         // Modal para imágenes adicionales  
         .modal#imageModal(style="display:none")  
             .modal-content  
                 span.close-button &times;  
                 div#modalImageContainer // Contenedor para la imagen principal y las imágenes adicionales  
-
         div#results.grid  
             // Los resultados se poblarán aquí  
 

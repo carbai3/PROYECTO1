@@ -139,7 +139,10 @@ app.get('/object/:id', async (req, res) => {
         const objResponse = await axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectId}`);
         const object = objResponse.data;
 
-        res.render('additional-images', { object, additionalImages: object.additionalImages || [], message: object.additionalImages ? '' : 'No hay imágenes adicionales disponibles.' });
+        res.render('additional-images', {  
+            object,  
+            additionalImages: object.additionalImages && object.additionalImages.length > 0 ? object.additionalImages : [],  
+            message: object.additionalImages && object.additionalImages.length > 0 ? '' : 'No hay imágenes adicionales disponibles.'  });
     } catch (error) {
         console.error('Error al obtener el objeto:', error.message);
         res.status(500).json({ message: 'Error al obtener el objeto desde la API.' });
