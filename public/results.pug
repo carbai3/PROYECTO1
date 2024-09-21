@@ -1,0 +1,49 @@
+doctype html  
+html(lang="en")  
+    head  
+        meta(charset="UTF-8")  
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")  
+        title Resultados del Museo  
+        link(rel="stylesheet", href="styles.css")  
+    body  
+        form(id="searchForm", action="/search", method="POST")  
+            label(for="department") Departamento:  
+            select(id="department" name="department")  
+                option(value="") Selecciona un departamento  
+                // Las opciones de departamento se llenarán aquí mediante JavaScript  
+                // Aquí puedes añadir dinámicamente las opciones de departamentos si es necesario  
+
+            label(for="geoLocation") Localización:  
+            input(type="text" id="geoLocation" name="geoLocation" placeholder="Ej. France")  
+            label(for="keyword") Palabra clave:  
+            input(type="text" id="keyword" name="keyword" placeholder="Buscar...")  
+            button(type="submit") Buscar  
+
+        div.grid-container  
+            each object in objects  
+                .card  
+                    img(src=object.primaryImage || '/image/sinImagen.jpg', alt=object.title || 'Sin título')  
+                    h3 #{object.title || 'Sin título'}  
+                    p Cultura: #{object.culture || 'Desconocida'}  
+                    p Dinastía: #{object.dynasty || 'Desconocida'}  
+                    if object.additionalImages && object.additionalImages.length > 0  
+                        button(onclick=`openModal(${JSON.stringify(object.additionalImages)})`) Ver imágenes adicionales   
+
+        nav.pagination  
+            if page > 1  
+                a(href=`/search?department=${departmentId}&keyword=${keyword}&location=${location}&page=${page - 1}`) Anterior  
+            each pageNum in Array.from({ length: totalPages }, (_, i) => i + 1)  
+                if pageNum === page  
+                    span= pageNum  
+                else  
+                    a(href=`/search?department=${departmentId}&keyword=${keyword}&location=${location}&page=${pageNum}`)= pageNum  
+            if page < totalPages  
+                a(href=`/search?department=${departmentId}&keyword=${keyword}&location=${location}&page=${page + 1}`) Siguiente
+
+        // Modal structure (hidden by default)  
+        div#imageModal.modal(style="display:none")  
+            div.modal-content  
+                span#closeModal(onclick="closeModal()") &times;   
+                div#modalImageContainer // contenedor imágenes modal   
+
+        script(src="function.js")

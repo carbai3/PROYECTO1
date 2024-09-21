@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     const keywordInput = document.getElementById("keyword");  
     const searchForm = document.getElementById("searchForm");  
     const resultsContainer = document.getElementById("results");  
-    const modal = document.getElementById("imageModal");  
     const modalImageContainer = document.getElementById("modalImageContainer");  
     const closeButton = document.querySelector(".close-button");  
 
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
     function showModal(images) {
-        const modal = document.getElementById("imageModal");
         const imagesContainer = document.getElementById("modalImagesContainer");
         if (!imagesContainer) {  
             console.error("No se encontró el contenedor de imágenes.");  
